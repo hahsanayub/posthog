@@ -999,6 +999,14 @@ class ExperimentMetricMathType(StrEnum):
     SUM = "sum"
 
 
+class ExperimentMetricOutlierHandling(BaseModel):
+    model_config = ConfigDict(
+        extra="forbid",
+    )
+    lower_bound_percentile: Optional[float] = None
+    upper_bound_percentile: Optional[float] = None
+
+
 class ExperimentMetricType(StrEnum):
     FUNNEL = "funnel"
     MEAN = "mean"
@@ -8036,18 +8044,22 @@ class ExperimentMeanMetric(BaseModel):
         extra="forbid",
     )
     kind: Literal["ExperimentMetric"] = "ExperimentMetric"
+    lower_bound_percentile: Optional[float] = None
     metric_type: Literal["mean"] = "mean"
     name: Optional[str] = None
     source: Union[EventsNode, ActionsNode, ExperimentDataWarehouseNode]
     time_window_hours: Optional[float] = None
+    upper_bound_percentile: Optional[float] = None
 
 
 class ExperimentMeanMetricTypeProps(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
+    lower_bound_percentile: Optional[float] = None
     metric_type: Literal["mean"] = "mean"
     source: Union[EventsNode, ActionsNode, ExperimentDataWarehouseNode]
+    upper_bound_percentile: Optional[float] = None
 
 
 class ExperimentMetricTypeProps(RootModel[Union[ExperimentMeanMetricTypeProps, ExperimentFunnelMetricTypeProps]]):
