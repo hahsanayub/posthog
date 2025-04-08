@@ -8,6 +8,7 @@ import { Query } from '~/queries/Query/Query'
 import { ExperimentMetric, ExperimentMetricType, NodeKind } from '~/queries/schema/schema-general'
 import { FilterType } from '~/types'
 
+import { ExperimentMetricOutlierHandling } from './ExperimentMetricOutlierHandling'
 import { commonActionFilterProps } from './Metrics/Selectors'
 import {
     filterToMetricConfig,
@@ -206,6 +207,9 @@ export function ExperimentMetricForm({
                         />
                     )}
                 </div>
+                {metric.metric_type === ExperimentMetricType.MEAN && (
+                    <ExperimentMetricOutlierHandling metric={metric} handleSetMetric={handleSetMetric} />
+                )}
             </div>
         </div>
     )
