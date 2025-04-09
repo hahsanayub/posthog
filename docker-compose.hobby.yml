@@ -142,8 +142,8 @@ services:
         image: caddy:2.6.1
         restart: unless-stopped
         ports:
-            - '80:80'
-            - '443:443'
+            - '85:80'
+            - '444:443'
         volumes:
             - ./Caddyfile:/etc/caddy/Caddyfile
             - caddy-data:/data
