@@ -674,9 +674,9 @@ class FunnelBase(ABC):
         step_conditions: list[ast.Expr] = []
 
         for index in range(length):
-            step_conditions.append(parse_expr(f"step_{index} = 1"))
+            step_conditions.append(parse_expr(f"step_{index}"))
             if exclusions[index]:
-                step_conditions.append(parse_expr(f"exclusion_{index} = 1"))
+                step_conditions.append(parse_expr(f"exclusion_{index}"))
 
         return ast.Or(exprs=step_conditions)
 
@@ -693,7 +693,7 @@ class FunnelBase(ABC):
         step_cols: list[ast.Expr] = []
         condition = self._build_step_query(entity, index, entity_name, step_prefix)
         step_cols.append(
-            parse_expr(f"if({{condition}}, 1, 0) as {step_prefix}step_{index}", placeholders={"condition": condition})
+            parse_expr(f"nullIf({{condition}}, 0) as {step_prefix}step_{index}", placeholders={"condition": condition})
         )
         if not for_udf:
             step_cols.append(
