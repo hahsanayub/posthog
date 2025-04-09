@@ -693,7 +693,7 @@ class FunnelBase(ABC):
         step_cols: list[ast.Expr] = []
         condition = self._build_step_query(entity, index, entity_name, step_prefix)
         step_cols.append(
-            parse_expr(f"nullIf({{condition}}, 0) as {step_prefix}step_{index}", placeholders={"condition": condition})
+            parse_expr(f"{{condition}} as {step_prefix}step_{index}", placeholders={"condition": condition})
         )
         if not for_udf:
             step_cols.append(
